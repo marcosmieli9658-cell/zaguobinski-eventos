@@ -1,4 +1,4 @@
-import { cp, copyFile, mkdir, readFile, readdir } from 'node:fs/promises';
+import { cp, copyFile, mkdir, readFile, readdir, stat } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
@@ -59,6 +59,32 @@ for (const route of ['', ...routes]) {
   }
 }
 const files = await readdir(root, { recursive: true });
+const budgets = {
+  'images/hero-picanha.webp': 150_000,
+  'images/logo-192.webp': 15_000,
+  'images/ritual.webp': 180_000,
+};
+for (const [file, maximum] of Object.entries(budgets)) {
+  assert.ok(
+    (await stat(path.join(root, file))).size <= maximum,
+    `Image budget exceeded: ${file}`,
+  );
+}
+const home = await readFile(path.join(root, 'index.html'), 'utf8');
+assert.ok(
+  !/<img[^>]+src="[^"]*hero-picanha-aprovada\.png"/.test(home),
+  'The original PNG must not be delivered as the hero',
+);
+assert.match(
+  home,
+  /<img[^>]+ritual\.webp[^>]+loading="lazy"/,
+  'Secondary scenery should load lazily',
+);
+assert.match(
+  home,
+  /<button[^>]+disabled[^>]*>Preparar meu pedido/,
+  'The local-only form must not submit before hydration',
+);
 assert.ok(
   !files.some((file) => /\.pdf$|\.env|\.pem$/.test(file)),
   'Private files must not be published',

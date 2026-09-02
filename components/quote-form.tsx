@@ -1,15 +1,29 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { ArrowUpRight, Check, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { menus, whatsapp } from '@/lib/menus';
 
+const subscribeToHydration = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
+
 export default function QuoteForm() {
+  // Prevent a native GET submission before the local-only form has hydrated.
+  const interactive = useSyncExternalStore(
+    subscribeToHydration,
+    clientReady,
+    serverReady,
+  );
   const [ready, setReady] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const confirmation = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (ready) confirmation.current?.focus();
+  }, [ready]);
   function prepare(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -123,6 +137,7 @@ export default function QuoteForm() {
               id="guests"
               name="guests"
               type="number"
+              inputMode="numeric"
               min="1"
               step="1"
               placeholder="Número de convidados"
@@ -131,7 +146,15 @@ export default function QuoteForm() {
           </div>
           <div className="field">
             <Label htmlFor="date">Data do evento</Label>
-            <Input id="date" name="date" type="date" />
+            <Input
+              id="date"
+              name="date"
+              type="date"
+              aria-describedby="date-hint"
+            />
+            <small id="date-hint" className="field-hint">
+              Ainda sem data? Deixe em branco.
+            </small>
           </div>
           <div className="field">
             <Label htmlFor="city">Em qual cidade? *</Label>
@@ -164,7 +187,12 @@ export default function QuoteForm() {
           </p>
         )}
         {ready ? (
-          <div className="quote-ready" aria-live="polite">
+          <div
+            className="quote-ready"
+            ref={confirmation}
+            tabIndex={-1}
+            aria-label="Pedido pronto para conferir"
+          >
             <p>
               <Check size={16} /> Seu pedido está pronto para enviar.
             </p>
@@ -183,10 +211,20 @@ export default function QuoteForm() {
             <small>Nenhuma mensagem foi enviada ainda.</small>
           </div>
         ) : (
-          <Button type="submit" className="button form-submit">
+          <Button
+            type="submit"
+            className="button form-submit"
+            disabled={!interactive}
+          >
             Preparar meu pedido de orçamento <ArrowUpRight size={19} />
           </Button>
         )}
+        <noscript>
+          <p className="field-hint">
+            Para preparar a mensagem aqui, ative o JavaScript. Você também pode
+            usar o contato direto pelo WhatsApp.
+          </p>
+        </noscript>
         <p className="form-privacy">
           Os dados ficam nesta página até você abrir o WhatsApp. Sem cadastro e
           sem reserva automática. Disponibilidade, atendimento e valores são

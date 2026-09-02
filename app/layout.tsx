@@ -4,12 +4,14 @@ import './globals.css';
 const display = Barlow_Condensed({
   variable: '--font-display',
   subsets: ['latin'],
-  weight: ['500', '600', '700', '800'],
+  weight: ['600', '700'],
+  display: 'swap',
 });
 const body = Manrope({
   variable: '--font-body',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
 });
 const origin = 'https://marcosmieli9658-cell.github.io/zaguobinski-eventos';
 export const metadata: Metadata = {
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
     description: 'Bom churrasco. Bons momentos.',
     images: [origin + '/og.jpg'],
   },
-  icons: { icon: '/zaguobinski-eventos/images/logo.jpeg' },
+  icons: { icon: '/zaguobinski-eventos/images/icon-64.png' },
 };
 export default function RootLayout({
   children,

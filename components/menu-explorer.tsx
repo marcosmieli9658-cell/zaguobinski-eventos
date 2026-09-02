@@ -55,6 +55,7 @@ export default function MenuExplorer() {
               if (
                 !input ||
                 typeof input !== 'object' ||
+                Object.keys(input).length !== 1 ||
                 !('slug' in input) ||
                 !menus.some((m) => m.slug === input.slug)
               )
@@ -89,10 +90,8 @@ export default function MenuExplorer() {
           </h2>
         </div>
         <p>
-          Da tradição à seleção premium.
-          <br />
-          Escolha o cardápio que combina
-          <br />
+          Da tradição à seleção premium. <br />
+          Escolha o cardápio que combina <br />
           com o seu jeito de receber.
         </p>
       </div>
@@ -117,11 +116,12 @@ export default function MenuExplorer() {
                 <Flame size={18} />
               </div>
               <img
-                src={`${BASE}/cardapios/${m.slug}.jpeg`}
+                src={`${BASE}/cardapios/${m.slug}.webp`}
                 alt={`Cardápio original ${m.name} da Zaguobinski Eventos`}
-                width="1536"
-                height="1024"
+                width="1024"
+                height="683"
                 loading="lazy"
+                decoding="async"
               />
               <Button
                 className="art-expand"

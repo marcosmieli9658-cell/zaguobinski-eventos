@@ -9,8 +9,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useEffect, useRef } from 'react';
 import MenuExplorer from '@/components/menu-explorer';
 import QuoteForm from '@/components/quote-form';
 const base = '/zaguobinski-eventos';
@@ -21,7 +20,20 @@ const services = [
   { icon: Heart, text: 'Reposição durante o evento' },
 ];
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const navigation = useRef<HTMLDetailsElement>(null);
+  const closeMenu = () => {
+    if (navigation.current) navigation.current.open = false;
+  };
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && navigation.current?.open) {
+        navigation.current.open = false;
+        navigation.current.querySelector('summary')?.focus();
+      }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, []);
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -33,43 +45,51 @@ export default function Home() {
           href={base + '/'}
           aria-label="Zaguobinski Eventos, início"
         >
-          <img src={base + '/images/logo.jpeg'} alt="" width="62" height="62" />
+          <img
+            src={base + '/images/logo-192.webp'}
+            alt=""
+            width="62"
+            height="62"
+          />
           <span>
             ZAGUOBINSKI<small>EVENTOS & CHURRASCOS</small>
           </span>
         </a>
         <nav
+          id="primary-navigation"
           aria-label="Navegação principal"
-          className={menuOpen ? 'nav open' : 'nav'}
+          className="nav"
         >
-          <a href="#experiencia" onClick={() => setMenuOpen(false)}>
-            A experiência
-          </a>
-          <a href="#cardapios" onClick={() => setMenuOpen(false)}>
-            Nossos cardápios
-          </a>
-          <a href="#contato" onClick={() => setMenuOpen(false)}>
-            Seu evento
-          </a>
+          <a href="#experiencia">A experiência</a>
+          <a href="#cardapios">Nossos cardápios</a>
+          <a href="#contato">Seu evento</a>
         </nav>
         <a className="button small header-cta" href="#contato">
           Vamos celebrar <ArrowUpRight size={16} />
         </a>
-        <Button
-          className="menu-toggle"
-          variant="ghost"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X /> : <Menu />}
-        </Button>
+        <details className="mobile-navigation" ref={navigation}>
+          <summary className="menu-toggle" aria-label="Menu principal">
+            <Menu className="menu-icon-open" aria-hidden="true" />
+            <X className="menu-icon-close" aria-hidden="true" />
+          </summary>
+          <nav className="mobile-nav" aria-label="Navegação móvel">
+            <a href="#experiencia" onClick={closeMenu}>
+              A experiência
+            </a>
+            <a href="#cardapios" onClick={closeMenu}>
+              Nossos cardápios
+            </a>
+            <a href="#contato" onClick={closeMenu}>
+              Seu evento
+            </a>
+          </nav>
+        </details>
       </header>
       <main id="conteudo">
         <section className="hero">
           <img
             className="hero-image"
-            src={base + '/images/hero-picanha-aprovada.png'}
+            src={base + '/images/hero-picanha.webp'}
             alt=""
             width={826}
             height={620}
@@ -161,7 +181,16 @@ export default function Home() {
         </section>
         <MenuExplorer />
         <section className="ritual-section">
-          <div className="ritual-photo" />
+          <div className="ritual-photo">
+            <img
+              src={base + '/images/ritual.webp'}
+              alt=""
+              width={1672}
+              height={941}
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           <div className="ritual-content">
             <p className="eyebrow">UM RITUAL QUE MERECE SER VIVIDO</p>
             <h2>
@@ -189,8 +218,7 @@ export default function Home() {
               </h2>
             </div>
             <p>
-              Um caminho simples para
-              <br />
+              Um caminho simples para <br />
               receber bem e aproveitar.
             </p>
           </div>

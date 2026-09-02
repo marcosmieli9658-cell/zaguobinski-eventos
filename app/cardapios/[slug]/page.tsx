@@ -50,7 +50,12 @@ export default async function MenuPage({
     <main className="detail-page">
       <header className="detail-header">
         <a href={BASE + '/'} className="brand">
-          <img src={BASE + '/images/logo.jpeg'} alt="" width="52" height="52" />
+          <img
+            src={BASE + '/images/logo-192.webp'}
+            alt=""
+            width="52"
+            height="52"
+          />
           <span>
             ZAGUOBINSKI<small>EVENTOS & CHURRASCOS</small>
           </span>
@@ -87,10 +92,12 @@ export default async function MenuPage({
             rel="noopener noreferrer"
           >
             <img
-              src={`${BASE}/cardapios/${m.slug}.jpeg`}
+              src={`${BASE}/cardapios/${m.slug}.webp`}
               alt={`Material original do cardápio ${m.name}`}
-              width="1536"
-              height="1024"
+              width="1024"
+              height="683"
+              loading="lazy"
+              decoding="async"
             />
           </a>
           <p>Clique na arte para consultar o material original.</p>
