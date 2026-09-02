@@ -27,13 +27,13 @@ Confirmar contatos, composição dos cardápios, cidade/região de atendimento, 
 
 ## Mídia
 
-Logo e artes de cardápio fornecidos pelo cliente. Fotos de ambientação criadas por IA, identificadas como ilustrativas no rodapé. Não representam trabalhos reais executados pela empresa.
+Logo e artes de cardápio fornecidos pelo cliente. A foto atual de abertura foi enviada e aprovada pelo usuário. As outras imagens de ambientação foram criadas por IA. As imagens são identificadas como ilustrativas no rodapé; não são apresentadas como registros de trabalhos reais da empresa.
 
-Imagem de abertura: picanha fatiada em tábua escura à direita, fogo e brasa âmbar ao fundo, espaço negativo preto à esquerda, estética gastronômica cinematográfica sem pessoas ou textos. Arquivo: `public/images/hero.jpg`.
+Imagem de abertura: foto aprovada de picanha malpassada fatiada, sal e uma fatia no garfo. Arquivo original preservado em `public/images/hero-picanha-aprovada.png` (826 × 620). Aplicação à direita com degradê escuro e recorte responsivo, sem alterar a foto. A imagem anterior, `public/images/hero.jpg`, permanece na seção de ambientação abaixo dos cardápios. Para a versão definitiva, preferir um original de maior resolução e confirmar os direitos de uso.
 
 Imagem social: composição carvão, creme e laranja com picanha e os textos exatos “ZAGUOBINSKI EVENTOS” e “Bom churrasco. Bons momentos.” Arquivo: `public/og.jpg`.
 
-Vídeo Veo: direção preparada no Flow. A inclusão do arquivo final depende de geração e download bem-sucedidos; não há vídeo falso ou substituição por animação de foto.
+Vídeo Veo cancelado pelo usuário. O hero usa somente a foto estática aprovada; nenhum vídeo foi baixado ou publicado.
 
 ## Verificação
 

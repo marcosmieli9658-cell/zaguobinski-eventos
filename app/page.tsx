@@ -67,7 +67,14 @@ export default function Home() {
       </header>
       <main id="conteudo">
         <section className="hero">
-          <div className="hero-image" />
+          <img
+            className="hero-image"
+            src={base + '/images/hero-picanha-aprovada.png'}
+            alt=""
+            width={826}
+            height={620}
+            fetchPriority="high"
+          />
           <div className="hero-shade" />
           <div className="hero-inner">
             <p className="eyebrow">

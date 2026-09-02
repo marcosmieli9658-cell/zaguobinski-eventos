@@ -206,10 +206,11 @@ em {
 }
 .hero-image {
   position: absolute;
-  inset: 0;
-  background-image: url('/zaguobinski-eventos/images/hero.jpg');
-  background-size: cover;
-  background-position: center;
+  inset: 0 0 0 30%;
+  width: 70%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% center;
   z-index: -3;
   background-color: #100f0c;
 }
@@ -220,10 +221,12 @@ em {
   background:
     linear-gradient(
       90deg,
-      #100f0cf2 0%,
-      #100f0cbd 25%,
-      #100f0c30 62%,
-      #100f0c12 100%
+      #100f0c 0%,
+      #100f0c 28%,
+      #100f0ce8 38%,
+      #100f0c73 55%,
+      #100f0c0d 78%,
+      transparent 100%
     ),
     linear-gradient(
       0deg,
@@ -577,8 +580,10 @@ em {
     display: none;
   }
   .hero-image {
-    background-position: 66% center;
-    opacity: 0.74;
+    inset: 0;
+    width: 100%;
+    object-position: 82% center;
+    opacity: 0.84;
   }
   .hero-shade {
     background:
